@@ -25,3 +25,18 @@ resource "aws_lb_target_group" "main" {
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.main.id
 }
+
+resource "aws_security_group" "alb_main" {
+  name        = "alb_main"
+  description = "Security Group attached to alb"
+  vpc_id      = data.aws_vpc.main.id
+}
+
+resource "aws_vpc_security_group_ingress_rule" "alb_main_ingress_clouflare" {
+  security_group_id = aws_security_group.alb_main.id
+
+  cidr_ipv4   = "10.0.0.0/8"
+  from_port   = 80
+  ip_protocol = "tcp"
+  to_port     = 80
+}
