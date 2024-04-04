@@ -5,14 +5,16 @@ data "aws_vpc" "main" {
 data "aws_subnet" "main_public_a" {
   filter {
     name   = "tag:Name"
-    values = ["Main-public-b"]
+    values = ["Main-public-a"]
   }
 }
 
-data "aws_subnet" "main_public_a" {
+data "aws_subnet" "main_public_b" {
   filter {
     name   = "tag:Name"
     values = ["Main-public-b"]
   }
 }
+
+data "cloudflare_ip_ranges" "cloudflare" {}
 
