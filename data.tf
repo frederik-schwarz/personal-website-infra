@@ -16,5 +16,9 @@ data "aws_subnet" "main_public_b" {
   }
 }
 
+data "aws_ecs_cluster" "fargate" {
+  cluster_name = "fargate"
+}
+
 data "cloudflare_ip_ranges" "cloudflare" {}
 
