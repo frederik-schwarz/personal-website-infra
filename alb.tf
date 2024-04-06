@@ -6,23 +6,24 @@ resource "aws_alb" "main" {
   subnets            = [data.aws_subnet.main_public_a.id, data.aws_subnet.main_public_b.id]
 }
 
-# resource "aws_lb_listener" "main" {
-#   load_balancer_arn = aws_alb.main.arn
-#   port              = "443"
-#   protocol          = "HTTPS"
-#   ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-# #   certificate_arn   = "arn:aws:iam::187416307283:server-certificate/test_cert_rab3wuqwgja25ct3n4jdj2tzu4"
+resource "aws_lb_listener" "main" {
+  load_balancer_arn = aws_alb.main.arn
+  port              = "443"
+  protocol          = "HTTPS"
+  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  certificate_arn   = "arn:aws:acm:ap-southeast-2:897577706574:certificate/0c9b3d33-6f8a-48d8-aff5-e62163087c9c"
 
-#   default_action {
-#     type             = "forward"
-#     target_group_arn = aws_lb_target_group.main.arn
-#   }
-# }
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.main.arn
+  }
+}
 
 resource "aws_lb_target_group" "main" {
   name     = "main"
   port     = 80
   protocol = "HTTP"
+  target_type = "ip"
   vpc_id   = data.aws_vpc.main.id
 }
 
