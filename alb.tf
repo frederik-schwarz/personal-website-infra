@@ -11,7 +11,7 @@ resource "aws_lb_listener" "main" {
   port              = "443"
   protocol          = "HTTPS"
   ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
-  certificate_arn   = "arn:aws:acm:ap-southeast-2:897577706574:certificate/0c9b3d33-6f8a-48d8-aff5-e62163087c9c"
+  certificate_arn   = "arn:aws:acm:ap-southeast-2:897577706574:certificate/9d4a7b99-e64b-4355-b5fc-4485a25d23fa"
 
   default_action {
     type             = "forward"
@@ -21,7 +21,7 @@ resource "aws_lb_listener" "main" {
 
 resource "aws_lb_target_group" "main" {
   name     = "main"
-  port     = 80
+  port     = 8080
   protocol = "HTTP"
   target_type = "ip"
   vpc_id   = data.aws_vpc.main.id
