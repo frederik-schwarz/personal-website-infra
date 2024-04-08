@@ -5,8 +5,9 @@ resource "aws_ecs_service" "main" {
   desired_count   = 1
   launch_type     = "FARGATE"
   network_configuration {
-    subnets = [data.aws_subnet.main_private_a.id, data.aws_subnet.main_private_b.id]
+    subnets = [data.aws_subnet.main_public_a.id, data.aws_subnet.main_public_b.id]
     security_groups = [aws_security_group.ecs.id]
+    assign_public_ip = true
   }
   load_balancer {
     target_group_arn = aws_lb_target_group.main.arn
@@ -23,10 +24,13 @@ resource "aws_ecs_task_definition" "personal_website" {
   memory                   = 512 
   execution_role_arn       = "arn:aws:iam::897577706574:role/ecsTaskExecutionRole"
   task_role_arn            = aws_iam_role.fargate.arn
+  runtime_platform {
+    cpu_architecture = "ARM64"
+  }
   container_definitions    = jsonencode([
     {
       name      = "personal-website"
-      image     = "personal-website"
+      image     = "897577706574.dkr.ecr.ap-southeast-2.amazonaws.com/personal-website:latest"
       cpu       = 256
       memory    = 512
       portMappings = [
@@ -51,7 +55,6 @@ resource "aws_security_group_rule" "ecs_egress_anywhere" {
   from_port         = 0
   to_port           = 0
   cidr_blocks       = ["0.0.0.0/0"]
-  ipv6_cidr_blocks  = ["::/0"]
 }
 
 resource "aws_security_group_rule" "alb_ingress" {
