@@ -16,6 +16,20 @@ data "aws_subnet" "main_public_b" {
   }
 }
 
+data "aws_subnet" "main_private_a" {
+  filter {
+    name   = "tag:Name"
+    values = ["Main-private-a"]
+  }
+}
+
+data "aws_subnet" "main_private_b" {
+  filter {
+    name   = "tag:Name"
+    values = ["Main-private-b"]
+  }
+}
+
 data "aws_ecs_cluster" "fargate" {
   cluster_name = "fargate"
 }
