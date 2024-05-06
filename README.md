@@ -1,1 +1,1 @@
-![Infrastucture Diagram](https://github.com/frederik-schwarz/personal-website-infra/blob/main/infrastructure.png?raw=true)
+![Infrastucture diagram](https://github.com/frederik-schwarz/personal-website-infra/blob/main/infrastructure.png?raw=true)
