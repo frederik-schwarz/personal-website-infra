@@ -10,7 +10,7 @@ resource "aws_lb_listener" "main" {
   load_balancer_arn = aws_alb.main.arn
   port              = "443"
   protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-TLS13-1-2-2021-06"
+  ssl_policy        = var.CERTIFICATE
   certificate_arn   = "arn:aws:acm:ap-southeast-2:897577706574:certificate/9d4a7b99-e64b-4355-b5fc-4485a25d23fa"
 
   default_action {
@@ -21,8 +21,8 @@ resource "aws_lb_listener" "main" {
 
 resource "aws_lb_target_group" "main" {
   name     = "main"
-  port     = 8080
-  protocol = "HTTP"
+  port     = var.PORT
+  protocol = var.PROTOCOL
   target_type = "ip"
   vpc_id   = data.aws_vpc.main.id
 }

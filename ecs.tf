@@ -12,7 +12,7 @@ resource "aws_ecs_service" "main" {
   load_balancer {
     target_group_arn = aws_lb_target_group.main.arn
     container_name   = "personal-website"
-    container_port   = 8080
+    container_port   = var.PORT
   }
 }
 
@@ -35,7 +35,7 @@ resource "aws_ecs_task_definition" "personal_website" {
       memory    = 512
       portMappings = [
         {
-          containerPort = 8080
+          containerPort = var.PORT
         }
       ]
     },
@@ -61,7 +61,7 @@ resource "aws_security_group_rule" "alb_ingress" {
   security_group_id = aws_security_group.ecs.id
   type              = "ingress"
   protocol          = "tcp"
-  from_port         = 8080
-  to_port           = 8080
+  from_port         = var.PORT
+  to_port           = var.PORT
   source_security_group_id  = aws_security_group.alb_main.id
 }
